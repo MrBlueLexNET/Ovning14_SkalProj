@@ -3,7 +3,7 @@
 #nullable disable
     public class GymClass
     {
-        int GymClassId { get; set; }
+        int Id { get; set; }
         string Name { get; set; }
         DateTime StartTime { get; set; }
         TimeSpan Duration { get; set; }

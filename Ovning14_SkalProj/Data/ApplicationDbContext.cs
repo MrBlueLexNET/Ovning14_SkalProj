@@ -12,7 +12,7 @@ namespace Ovning14_SkalProj.Data
         {
             ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
         }
-        public DbSet<Ovning14_SkalProj.Models.GymClass> Course { get; set; } = default!;
+        public DbSet<GymClass> GymClasses => Set<GymClass>();
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             //FluentAPI goes here

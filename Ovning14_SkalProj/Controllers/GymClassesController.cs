@@ -22,20 +22,20 @@ namespace Ovning14_SkalProj.Controllers
         // GET: GymClasses
         public async Task<IActionResult> Index()
         {
-              return _context.Course != null ? 
-                          View(await _context.Course.ToListAsync()) :
-                          Problem("Entity set 'ApplicationDbContext.Course'  is null.");
+              return _context.GymClasses != null ? 
+                          View(await _context.GymClasses.ToListAsync()) :
+                          Problem("Entity set 'ApplicationDbContext.GymClasses'  is null.");
         }
 
         // GET: GymClasses/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null || _context.Course == null)
+            if (id == null || _context.GymClasses == null)
             {
                 return NotFound();
             }
 
-            var gymClass = await _context.Course
+            var gymClass = await _context.GymClasses
                 .FirstOrDefaultAsync(m => m.GymClassId == id);
             if (gymClass == null)
             {
@@ -70,12 +70,12 @@ namespace Ovning14_SkalProj.Controllers
         // GET: GymClasses/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null || _context.Course == null)
+            if (id == null || _context.GymClasses == null)
             {
                 return NotFound();
             }
 
-            var gymClass = await _context.Course.FindAsync(id);
+            var gymClass = await _context.GymClasses.FindAsync(id);
             if (gymClass == null)
             {
                 return NotFound();
@@ -121,12 +121,12 @@ namespace Ovning14_SkalProj.Controllers
         // GET: GymClasses/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null || _context.Course == null)
+            if (id == null || _context.GymClasses == null)
             {
                 return NotFound();
             }
 
-            var gymClass = await _context.Course
+            var gymClass = await _context.GymClasses
                 .FirstOrDefaultAsync(m => m.GymClassId == id);
             if (gymClass == null)
             {
@@ -141,14 +141,14 @@ namespace Ovning14_SkalProj.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_context.Course == null)
+            if (_context.GymClasses == null)
             {
-                return Problem("Entity set 'ApplicationDbContext.Course'  is null.");
+                return Problem("Entity set 'ApplicationDbContext.GymClasses'  is null.");
             }
-            var gymClass = await _context.Course.FindAsync(id);
+            var gymClass = await _context.GymClasses.FindAsync(id);
             if (gymClass != null)
             {
-                _context.Course.Remove(gymClass);
+                _context.GymClasses.Remove(gymClass);
             }
             
             await _context.SaveChangesAsync();
@@ -157,7 +157,7 @@ namespace Ovning14_SkalProj.Controllers
 
         private bool GymClassExists(int id)
         {
-          return (_context.Course?.Any(e => e.GymClassId == id)).GetValueOrDefault();
+          return (_context.GymClasses?.Any(e => e.GymClassId == id)).GetValueOrDefault();
         }
     }
 }

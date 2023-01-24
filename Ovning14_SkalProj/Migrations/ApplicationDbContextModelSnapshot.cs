@@ -8,7 +8,7 @@ using Ovning14_SkalProj.Data;
 
 #nullable disable
 
-namespace Ovning14SkalProj.Data.Migrations
+namespace Ovning14SkalProj.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
     partial class ApplicationDbContextModelSnapshot : ModelSnapshot
@@ -21,27 +21,6 @@ namespace Ovning14SkalProj.Data.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
-
-            modelBuilder.Entity("ApplicationUserGymClassApplicationUserGymClass", b =>
-                {
-                    b.Property<int>("AttendedClassesApplicationUserId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("AttendedClassesGymClassId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("AttendingMembersApplicationUserId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("AttendingMembersGymClassId")
-                        .HasColumnType("int");
-
-                    b.HasKey("AttendedClassesApplicationUserId", "AttendedClassesGymClassId", "AttendingMembersApplicationUserId", "AttendingMembersGymClassId");
-
-                    b.HasIndex("AttendingMembersApplicationUserId", "AttendingMembersGymClassId");
-
-                    b.ToTable("ApplicationUserGymClassApplicationUserGymClass");
-                });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
@@ -188,9 +167,6 @@ namespace Ovning14SkalProj.Data.Migrations
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
 
-                    b.Property<int>("ApplicationUserId")
-                        .HasColumnType("int");
-
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
@@ -250,21 +226,13 @@ namespace Ovning14SkalProj.Data.Migrations
 
             modelBuilder.Entity("Ovning14_SkalProj.Models.ApplicationUserGymClass", b =>
                 {
-                    b.Property<int>("ApplicationUserId")
-                        .HasColumnType("int");
+                    b.Property<string>("ApplicationUserId")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<int>("GymClassId")
                         .HasColumnType("int");
 
-                    b.Property<int>("ApplicationUserGymClassId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("ApplicationUserId1")
-                        .HasColumnType("nvarchar(450)");
-
                     b.HasKey("ApplicationUserId", "GymClassId");
-
-                    b.HasIndex("ApplicationUserId1");
 
                     b.HasIndex("GymClassId");
 
@@ -283,6 +251,7 @@ namespace Ovning14SkalProj.Data.Migrations
                         .HasColumnType("time");
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("StartTime")
@@ -290,22 +259,7 @@ namespace Ovning14SkalProj.Data.Migrations
 
                     b.HasKey("GymClassId");
 
-                    b.ToTable("Course");
-                });
-
-            modelBuilder.Entity("ApplicationUserGymClassApplicationUserGymClass", b =>
-                {
-                    b.HasOne("Ovning14_SkalProj.Models.ApplicationUserGymClass", null)
-                        .WithMany()
-                        .HasForeignKey("AttendedClassesApplicationUserId", "AttendedClassesGymClassId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Ovning14_SkalProj.Models.ApplicationUserGymClass", null)
-                        .WithMany()
-                        .HasForeignKey("AttendingMembersApplicationUserId", "AttendingMembersGymClassId")
-                        .OnDelete(DeleteBehavior.ClientCascade)
-                        .IsRequired();
+                    b.ToTable("GymClasses");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -361,15 +315,21 @@ namespace Ovning14SkalProj.Data.Migrations
 
             modelBuilder.Entity("Ovning14_SkalProj.Models.ApplicationUserGymClass", b =>
                 {
-                    b.HasOne("Ovning14_SkalProj.Models.ApplicationUser", null)
+                    b.HasOne("Ovning14_SkalProj.Models.ApplicationUser", "ApplicationUser")
                         .WithMany("AttendedClasses")
-                        .HasForeignKey("ApplicationUserId1");
+                        .HasForeignKey("ApplicationUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.HasOne("Ovning14_SkalProj.Models.GymClass", null)
+                    b.HasOne("Ovning14_SkalProj.Models.GymClass", "GymClass")
                         .WithMany("AttendingMembers")
                         .HasForeignKey("GymClassId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("ApplicationUser");
+
+                    b.Navigation("GymClass");
                 });
 
             modelBuilder.Entity("Ovning14_SkalProj.Models.ApplicationUser", b =>

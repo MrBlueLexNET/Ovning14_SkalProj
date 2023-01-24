@@ -23,9 +23,15 @@ namespace Ovning14_SkalProj.Controllers
             this.db = db;
             this.roleManager = roleManager;
         }
-
-        public IActionResult Index()
+        [AllowAnonymous]
+        public async Task<IActionResult> Index()
         {
+            var user = await userManager.GetUserAsync(User);
+            if (User.Identity.IsAuthenticated)
+            {
+
+            }
+
             return View();
         }
 

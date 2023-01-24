@@ -18,6 +18,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Ovning14_SkalProj.Core\Ovning14_SkalProj.Core.csproj" />
+	  <ProjectReference Include="..\Ovning14_SkalProj.Data\Ovning14_SkalProj.Data.csproj" />
   </ItemGroup>
 
 </Project>

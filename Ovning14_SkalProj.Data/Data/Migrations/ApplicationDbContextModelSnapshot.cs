@@ -236,7 +236,7 @@ namespace Ovning14SkalProj.Migrations
 
                     b.HasIndex("GymClassId");
 
-                    b.ToTable("ApplicationUserGymClass");
+                    b.ToTable("ApplicationUserGymClass", (string)null);
                 });
 
             modelBuilder.Entity("Ovning14_SkalProj.Models.GymClass", b =>
@@ -263,7 +263,7 @@ namespace Ovning14SkalProj.Migrations
 
                     b.HasKey("GymClassId");
 
-                    b.ToTable("GymClasses");
+                    b.ToTable("GymClasses", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

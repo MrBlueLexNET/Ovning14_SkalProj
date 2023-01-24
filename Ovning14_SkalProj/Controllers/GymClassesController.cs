@@ -56,7 +56,7 @@ namespace Ovning14_SkalProj.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("GymClassId,Name,StartTime,Duration")] GymClass gymClass)
+        public async Task<IActionResult> Create([Bind("GymClassId,Name,StartTime,Duration,Description")] GymClass gymClass)
         {
             if (ModelState.IsValid)
             {
@@ -88,7 +88,7 @@ namespace Ovning14_SkalProj.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("GymClassId,Name,StartTime,Duration")] GymClass gymClass)
+        public async Task<IActionResult> Edit(int id, [Bind("GymClassId,Name,StartTime,Duration,Description")] GymClass gymClass)
         {
             if (id != gymClass.GymClassId)
             {

@@ -20,7 +20,7 @@ namespace Ovning14_SkalProj.Data
 
             // Defined composite key for junction entity (kopplingstabell)
             modelBuilder.Entity<ApplicationUserGymClass>()
-                .HasKey(e => new { e.GymClassId, e.ApplicationUserId });
+                .HasKey(e => new { e.ApplicationUserId, e.GymClassId });
 
             // Shadow Property
             //modelBuilder.Entity<Student>().Property<DateTime>("Edited");

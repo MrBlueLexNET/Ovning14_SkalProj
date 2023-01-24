@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -13,12 +14,34 @@ namespace Ovning14_SkalProj.Controllers
     public class GymClassesController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly UserManager<ApplicationUser> userManager;
 
-        public GymClassesController(ApplicationDbContext context)
+        public GymClassesController(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
         {
             _context = context;
+            this.userManager = userManager;
         }
 
+        //BookingToggle
+        public async Task<IActionResult> BookingToggle(int? id) 
+            {
+            if (id == null || _context.GymClasses == null)
+            {
+                return NotFound();
+            }
+            var user = await userManager.GetUserAsync(User);
+            if (User.Identity.IsAuthenticated)
+            {
+
+                Console.WriteLine(user); 
+
+            }
+            else 
+            { 
+            
+            }
+            return RedirectToAction(nameof(Index));
+        }
         // GET: GymClasses
         public async Task<IActionResult> Index()
         {

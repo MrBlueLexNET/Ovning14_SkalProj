@@ -10,6 +10,7 @@ namespace Ovning14_SkalProj.Data
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
+            ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
         }
         public DbSet<Ovning14_SkalProj.Models.GymClass> Course { get; set; } = default!;
         protected override void OnModelCreating(ModelBuilder modelBuilder)

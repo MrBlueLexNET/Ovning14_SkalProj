@@ -29,12 +29,11 @@ namespace Ovning14_SkalProj.Controllers
         //BookingToggle
         public async Task<IActionResult> BookingToggle(int? id) 
             {
-            if (id == null || _context.GymClasses == null)
-            {
-                return NotFound();
-            }
+            if (id == null || _context.GymClasses == null) { return NotFound(); }
+            
             var userId = userManager.GetUserId(User);
             if (userId == null) { return BadRequest(); }
+
 
             var currentClass = _context.GymClasses.Include(g => g.AttendingMembers)
                                                     .FirstOrDefault(g => g.GymClassId == id);
@@ -46,26 +45,26 @@ namespace Ovning14_SkalProj.Controllers
                 //if the member is included among the AttendingMembers do mothing else add 
                 //ConnectExistingUserAndGymClassObjects();
 
-                async void ConnectExistingUserAndGymClassObjects()
-                {
-                    var userA = userManager.GetUserId(User);
-                    var classA = _context.GymClasses.Find(id);
-                    classA.AttendingMembers.Add(userA);
-                    _context.SaveChanges();
-                }
+                //async void ConnectExistingUserAndGymClassObjects()
+                //{
+                //    var userA = userManager.GetUserId(User);
+                //    var classA = _context.GymClasses.Find(id);
+                //    classA.AttendingMembers.Add(userA);
+                //    _context.SaveChanges();
+                //}
 
                 //UnAssignAnUserFromAClass();
-                void UnAssignAnUserFromAClass()
-                {
-                    var memberwithclass = _context.GymClasses
-                        .Include(c => c.AttendingMembers.Where(a => a.GymClassId == id))
-                        .FirstOrDefault(c => c.ApplicationUserId == userId);
-                    //AttendingMembers.GymClasses.RemoveAt(0);
-                    _context.GymClasses.Remove(memberwithclass.userId[0]);
-                    _context.ChangeTracker.DetectChanges();
-                    var debugview = _context.ChangeTracker.DebugView.ShortView;
-                    //_context.SaveChanges();
-                }
+                //void UnAssignAnUserFromAClass()
+                //{
+                //    var memberwithclass = _context.GymClasses
+                //        .Include(c => c.AttendingMembers.Where(a => a.GymClassId == id))
+                //        .FirstOrDefault(c => c.ApplicationUserId == userId);
+                //    AttendingMembers.GymClasses.RemoveAt(0);
+                //    _context.GymClasses.Remove(memberwithclass.userId[0]);
+                //    _context.ChangeTracker.DetectChanges();
+                //    var debugview = _context.ChangeTracker.DebugView.ShortView;
+                //    _context.SaveChanges();
+                //}
 
                 Console.WriteLine(userId); 
                 var memberWithClasses = await _context.GymClasses.Include(a => a.AttendingMembers)

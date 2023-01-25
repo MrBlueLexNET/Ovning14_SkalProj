@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -15,12 +16,15 @@ namespace Ovning14_SkalProj.Controllers
     {
         private readonly ApplicationDbContext _context;
         private readonly UserManager<ApplicationUser> userManager;
+        private readonly RoleManager<IdentityRole> roleManager;
 
-        public GymClassesController(ApplicationDbContext context, UserManager<ApplicationUser> userManager)
+        public GymClassesController(ApplicationDbContext context, UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager)
         {
             _context = context;
             this.userManager = userManager;
+            this.roleManager = roleManager;
         }
+        [Authorize]
 
         //BookingToggle
         public async Task<IActionResult> BookingToggle(int? id) 
@@ -29,16 +33,48 @@ namespace Ovning14_SkalProj.Controllers
             {
                 return NotFound();
             }
-            var user = await userManager.GetUserAsync(User);
+            var userId = userManager.GetUserId(User);
+            if (userId == null) { return BadRequest(); }
+
+            var currentClass = _context.GymClasses.Include(g => g.AttendingMembers)
+                                                    .FirstOrDefault(g => g.GymClassId == id);
+            
+            var attendingClasses = currentClass?.AttendingMembers.FirstOrDefault(a => a.ApplicationUserId == userId);
+
             if (User.Identity.IsAuthenticated)
             {
+                //if the member is included among the AttendingMembers do mothing else add 
+                //ConnectExistingUserAndGymClassObjects();
 
-                Console.WriteLine(user); 
+                async void ConnectExistingUserAndGymClassObjects()
+                {
+                    var userA = userManager.GetUserId(User);
+                    var classA = _context.GymClasses.Find(id);
+                    classA.AttendingMembers.Add(userA);
+                    _context.SaveChanges();
+                }
+
+                //UnAssignAnUserFromAClass();
+                void UnAssignAnUserFromAClass()
+                {
+                    var memberwithclass = _context.GymClasses
+                        .Include(c => c.AttendingMembers.Where(a => a.GymClassId == id))
+                        .FirstOrDefault(c => c.ApplicationUserId == userId);
+                    //AttendingMembers.GymClasses.RemoveAt(0);
+                    _context.GymClasses.Remove(memberwithclass.userId[0]);
+                    _context.ChangeTracker.DetectChanges();
+                    var debugview = _context.ChangeTracker.DebugView.ShortView;
+                    //_context.SaveChanges();
+                }
+
+                Console.WriteLine(userId); 
+                var memberWithClasses = await _context.GymClasses.Include(a => a.AttendingMembers)
+                    .FirstOrDefaultAsync(m => m.GymClassId == id);
 
             }
             else 
-            { 
-            
+            {
+                Console.WriteLine("User not login yet");
             }
             return RedirectToAction(nameof(Index));
         }

@@ -35,46 +35,31 @@ namespace Ovning14_SkalProj.Controllers
             if (userId == null) { return BadRequest(); }
 
 
-            var currentClass = _context.GymClasses.Include(g => g.AttendingMembers)
-                                                    .FirstOrDefault(g => g.GymClassId == id);
-            
-            var attendingClasses = currentClass?.AttendingMembers.FirstOrDefault(a => a.ApplicationUserId == userId);
+            //var currentClass = _context.GymClasses.Include(g => g.AttendingMembers)
+            //                                        .FirstOrDefault(g => g.GymClassId == id);
+            //var attendingClasses = currentClass?.AttendingMembers.FirstOrDefault(a => a.ApplicationUserId == userId);
 
-            if (User.Identity.IsAuthenticated)
+            //Query direct the Join tabel [AppUsersGymClasses] since we have the composit Key (userId and GymClassId)
+            var attendingClasses = await _context.AppUsersGymClasses.FindAsync(userId, id);
+
+            if (attendingClasses == null)
             {
-                //if the member is included among the AttendingMembers do mothing else add 
-                //ConnectExistingUserAndGymClassObjects();
+                var booking = new ApplicationUserGymClass
+                {
+                    ApplicationUserId = userId,
+                    GymClassId = (int)id
+                };
 
-                //async void ConnectExistingUserAndGymClassObjects()
-                //{
-                //    var userA = userManager.GetUserId(User);
-                //    var classA = _context.GymClasses.Find(id);
-                //    classA.AttendingMembers.Add(userA);
-                //    _context.SaveChanges();
-                //}
-
-                //UnAssignAnUserFromAClass();
-                //void UnAssignAnUserFromAClass()
-                //{
-                //    var memberwithclass = _context.GymClasses
-                //        .Include(c => c.AttendingMembers.Where(a => a.GymClassId == id))
-                //        .FirstOrDefault(c => c.ApplicationUserId == userId);
-                //    AttendingMembers.GymClasses.RemoveAt(0);
-                //    _context.GymClasses.Remove(memberwithclass.userId[0]);
-                //    _context.ChangeTracker.DetectChanges();
-                //    var debugview = _context.ChangeTracker.DebugView.ShortView;
-                //    _context.SaveChanges();
-                //}
-
-                Console.WriteLine(userId); 
-                var memberWithClasses = await _context.GymClasses.Include(a => a.AttendingMembers)
-                    .FirstOrDefaultAsync(m => m.GymClassId == id);
-
+                _context.AppUsersGymClasses.Add(booking);
             }
-            else 
+            else
             {
-                Console.WriteLine("User not login yet");
+                _context.AppUsersGymClasses.Remove(attendingClasses);
             }
+
+            await _context.SaveChangesAsync();
+
+           
             return RedirectToAction(nameof(Index));
         }
         // GET: GymClasses

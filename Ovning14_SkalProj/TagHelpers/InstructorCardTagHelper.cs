@@ -14,7 +14,7 @@ namespace Ovning14_SkalProj.TagHelpers
         public override void Process(TagHelperContext context, TagHelperOutput output)
         {
             string content = $@"<div class='card'>
-		                <div class='card-img'><img src='static/speakers/Speaker-{Instructor.InstructorId}.jpg' /></div>
+		                <div class='card-img'><img src='static/instructors/Instructor-{Instructor.InstructorId}.jpg' /></div>
 		                <h4 class='card-title'><a href='#'>{Instructor.FirstName} {Instructor.LastName}</a></h4>
 		                <p class='card-position'>{Instructor.IsPersonalTrainer}</p>
 		                <p class='card-description'>Keynote: {Instructor.Biography}</p>

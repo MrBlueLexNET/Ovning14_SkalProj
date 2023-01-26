@@ -79,6 +79,7 @@ namespace Ovning14_SkalProj.Controllers
             }
 
             var gymClass = await _context.GymClasses
+                .Include(v => v.AttendingMembers)
                 .FirstOrDefaultAsync(m => m.GymClassId == id);
             if (gymClass == null)
             {
@@ -118,7 +119,9 @@ namespace Ovning14_SkalProj.Controllers
                 return NotFound();
             }
 
-            var gymClass = await _context.GymClasses.FindAsync(id);
+            var gymClass = await _context.GymClasses
+                .Include(v => v.AttendingMembers)
+                .FirstOrDefaultAsync(m => m.GymClassId == id);
             if (gymClass == null)
             {
                 return NotFound();

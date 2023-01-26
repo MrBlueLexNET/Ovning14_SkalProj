@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Ovning14_SkalProj.Data;
 using Ovning14_SkalProj.Models;
 using System.Data;
@@ -29,6 +30,9 @@ namespace Ovning14_SkalProj.Controllers
             var user = await userManager.GetUserAsync(User);
             if (User.Identity.IsAuthenticated)
             {
+                return db.instructors != null ?
+                         View(await db.instructors.ToListAsync()) :
+                         Problem("Entity set 'ApplicationDbContext.instructors'  is null.");
 
             }
 

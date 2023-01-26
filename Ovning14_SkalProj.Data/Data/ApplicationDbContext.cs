@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Ovning14_SkalProj.Core.Entities;
 using Ovning14_SkalProj.Models;
 
 namespace Ovning14_SkalProj.Data
@@ -14,6 +15,7 @@ namespace Ovning14_SkalProj.Data
         }
         public DbSet<GymClass> GymClasses => Set<GymClass>();
         public DbSet<ApplicationUserGymClass> AppUsersGymClasses => Set<ApplicationUserGymClass>();
+        public DbSet<Instructor> instructors=> Set<Instructor>();
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             //FluentAPI goes here

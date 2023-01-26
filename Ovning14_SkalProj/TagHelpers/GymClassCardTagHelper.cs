@@ -9,6 +9,7 @@ namespace Ovning14_SkalProj.TagHelpers
     {
         public override void Process(TagHelperContext context, TagHelperOutput output)
         {
+            output.TagName = "strong";
             output.Content.SetHtmlContent($"Date: {DateTime.Now}");
         }
     }

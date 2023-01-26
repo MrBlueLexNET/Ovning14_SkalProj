@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Ovning14_SkalProj.Data;
+using Ovning14_SkalProj.Data.Data;
 using Ovning14_SkalProj.Models;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -17,6 +18,27 @@ builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.R
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
+
+//Open service for accessing the Db SeedData
+using (var scope = app.Services.CreateScope())
+{
+    var db = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+
+    //Drop Db
+    //db.Database.EnsureDeleted();
+    //Update Db
+    //db.Database.Migrate();
+
+    try
+    {
+        await SeedData.InitAsync(db);
+    }
+    catch (Exception e)
+    {
+        Console.WriteLine(e.Message);
+        throw;
+    }
+}
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

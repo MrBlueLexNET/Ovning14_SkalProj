@@ -9,15 +9,15 @@ using System.Threading.Tasks;
 namespace Ovning14_SkalProj.Data
 {
 
-    public class ApplicationContextFactory : IDesignTimeDbContextFactory<ApplicationDbContext>
-    {
-        public ApplicationDbContext CreateDbContext(string[] args)
-        {
-            var options = new DbContextOptionsBuilder<ApplicationDbContext>();
-            options.UseSqlServer("Not used here");
+    //public class ApplicationContextFactory : IDesignTimeDbContextFactory<ApplicationDbContext>
+    //{
+    //    public ApplicationDbContext CreateDbContext(string[] args)
+    //    {
+    //        var options = new DbContextOptionsBuilder<ApplicationDbContext>();
+    //        options.UseSqlServer("Not used here");
 
-            return new ApplicationDbContext(options.Options);
+    //        return new ApplicationDbContext(options.Options);
 
-        }
-    }
+    //    }
+    //}
 }

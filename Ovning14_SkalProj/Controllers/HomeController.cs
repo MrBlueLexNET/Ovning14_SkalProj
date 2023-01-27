@@ -35,8 +35,14 @@ namespace Ovning14_SkalProj.Controllers
                          Problem("Entity set 'ApplicationDbContext.instructors'  is null.");
 
             }
+            else
+            {
+                //return RedirectToAction("actionName", "controllerName", new { area = "Admin" });
+                return RedirectToAction("Index", "Instructors", null);
 
-            return View();
+            }
+
+            
         }
 
         public IActionResult Privacy()

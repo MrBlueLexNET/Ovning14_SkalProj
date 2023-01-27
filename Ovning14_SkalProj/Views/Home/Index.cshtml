@@ -9,8 +9,12 @@
 </div>*@
 
 <gym-class-card></gym-class-card>
-
+<div class="container">
+    <div class="row">
 @foreach (var item in Model) {
-    <instructor-card instructor="@item"></instructor-card>
+        
+            <instructor-card instructor="@item"></instructor-card>
+        
 }
-
+    </div>
+</div>

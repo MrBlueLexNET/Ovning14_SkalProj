@@ -1,0 +1,23 @@
+﻿@model Ovning14_SkalProj.Core.Entities.Instructor
+
+
+<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+    <div class='card'>
+        <div class='card-img'>
+            <img src='static/instructors/instructor-@(Model.InstructorId).jpg' />
+        </div>
+        <h4 class='card-title'>
+            <a href='#'>@(Model.FirstName) @(Model.LastName)</a>
+        </h4>
+        <p class='card-position'>@(Model.Biography)</p>
+        <p class='card-description'>Session time to be announced</p>
+        <ul class='social'>
+            <li>
+                <a target='_blank' href='#'>LinkedIn</a>
+            </li>
+            <li>
+                <a target='_blank' href='#'>Microsoft</a>
+            </li>
+        </ul>
+    </div>
+</div>

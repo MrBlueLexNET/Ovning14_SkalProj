@@ -5,9 +5,9 @@ VisualStudioVersion = 17.4.33213.308
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ovning14_SkalProj", "Ovning14_SkalProj\Ovning14_SkalProj.csproj", "{58105E8C-09DE-4211-8782-63797B17CBF9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ovning14_SkalProj.Core", "Ovning14_SkalProj.Core\Ovning14_SkalProj.Core.csproj", "{085E2DFF-4808-46E8-9A0C-7C84950D7C13}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ovning14_SkalProj.Core", "Ovning14_SkalProj.Core\Ovning14_SkalProj.Core.csproj", "{085E2DFF-4808-46E8-9A0C-7C84950D7C13}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ovning14_SkalProj.Data", "Ovning14_SkalProj.Data\Ovning14_SkalProj.Data.csproj", "{447AE653-B9E2-4B33-A254-C469F7D5E6A6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ovning14_SkalProj.Data", "Ovning14_SkalProj.Data\Ovning14_SkalProj.Data.csproj", "{447AE653-B9E2-4B33-A254-C469F7D5E6A6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

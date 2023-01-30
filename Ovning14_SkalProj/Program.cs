@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Ovning14_SkalProj.Data;
 using Ovning14_SkalProj.Data.Data;
+using Ovning14_SkalProj.Extensions;
 using Ovning14_SkalProj.Models;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -15,30 +16,33 @@ builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = false)
     .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>();
+
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
 
+await app.SeedDataAsync();
+
 //Open service for accessing the Db SeedData
-using (var scope = app.Services.CreateScope())
-{
-    var db = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+////using (var scope = app.Services.CreateScope())
+////{
+////    var db = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
 
-    //Drop Db
-    //db.Database.EnsureDeleted();
-    //Update Db
-    //db.Database.Migrate();
+////    //Drop Db
+////    //db.Database.EnsureDeleted();
+////    //Update Db
+////    //db.Database.Migrate();
 
-    try
-    {
-        await SeedData.InitAsync(db);
-    }
-    catch (Exception e)
-    {
-        Console.WriteLine(e.Message);
-        throw;
-    }
-}
+////    try
+////    {
+////        await SeedData.InitAsync(db);
+////    }
+////    catch (Exception e)
+////    {
+////        Console.WriteLine(e.Message);
+////        throw;
+////    }
+////}
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

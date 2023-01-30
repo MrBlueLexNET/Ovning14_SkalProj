@@ -1,5 +1,6 @@
 ﻿using Ovning14_SkalProj.Data.Data;
 using Ovning14_SkalProj.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace Ovning14_SkalProj.Extensions
 {
@@ -12,10 +13,10 @@ namespace Ovning14_SkalProj.Extensions
             var serviceProvider = scope.ServiceProvider;
             var db = serviceProvider.GetRequiredService<ApplicationDbContext>();
 
-            //db.Database.EnsureDeleted();
-            //db.Database.Migrate();
+            db.Database.EnsureDeleted();
+            db.Database.Migrate();
 
-            //dotnet user-secrets set "AdminPW" "BytMig123!"
+            //dotnet user-secrets set "AdminPW" "ChangeMe123!"
             var config = serviceProvider.GetRequiredService<IConfiguration>();
             var adminPW = config["AdminPW"];
 
@@ -23,8 +24,8 @@ namespace Ovning14_SkalProj.Extensions
 
             try
             {
-                //await SeedData.InitAsync(db, serviceProvider, adminPW);
-                await SeedData.InitAsync(db);
+                await SeedData.InitAsync(db, serviceProvider, adminPW);
+                //await SeedData.InitAsync(db);
             }
             catch (Exception e)
             {

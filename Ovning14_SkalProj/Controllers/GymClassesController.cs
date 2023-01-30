@@ -7,8 +7,11 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Ovning14_SkalProj.Core.ViewModels;
 using Ovning14_SkalProj.Data;
+using Ovning14_SkalProj.Core.Entities;
 using Ovning14_SkalProj.Models;
+using System.Security.Claims;
 
 namespace Ovning14_SkalProj.Controllers
 {
@@ -65,10 +68,30 @@ namespace Ovning14_SkalProj.Controllers
         // GET: GymClasses
         public async Task<IActionResult> Index()
         {
-              return _context.GymClasses != null ? 
-                          View(await _context.GymClasses.ToListAsync()) :
-                          Problem("Entity set 'ApplicationDbContext.GymClasses'  is null.");
+            //return _context.GymClasses != null ? 
+            //            View(await _context.GymClasses.ToListAsync()) :
+            //            Problem("Entity set 'ApplicationDbContext.GymClasses'  is null.");
+            // List<GymClass> model = await uow.GymClassRepository.GetAsync();
+
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (userId == null) { return BadRequest(); }
+            //var userId = userManager.GetUserId(User);
+
+            var model = (await _context.GymClasses.Include(g => g.AttendingMembers)
+                                                     .Select(g => new GymClassViewModel
+                                                     {
+                                                         GymClassId = g.GymClassId,
+                                                         Name = g.Name,
+                                                         Duration = g.Duration,
+                                                         StartTime = g.StartTime,
+                                                         Attending = g.AttendingMembers.Any(a => a.ApplicationUserId == userId)
+                                                    })
+                                                     .ToListAsync());
+        
+
+            return View(model);
         }
+    
 
         // GET: GymClasses/Details/5
         public async Task<IActionResult> Details(int? id)

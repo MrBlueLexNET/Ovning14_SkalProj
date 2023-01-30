@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Ovning14_SkalProj.Models.GymClass>
+﻿@model IEnumerable<GymClassViewModel>
 
 @{
     ViewData["Title"] = "Index";
@@ -21,9 +21,7 @@
             <th>
                 @Html.DisplayNameFor(model => model.Duration)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Description)
-            </th>
+            
             <th></th>
         </tr>
     </thead>
@@ -31,7 +29,15 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Name)
+                    @if (User.IsInRole("Member"))
+                    {
+
+                        <a asp-action="Details" asp-route-id="@item.GymClassId">@item.Name</a>
+                    }
+                    else
+                    {
+                        @Html.DisplayFor(modelItem => item.Name)
+                    }
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.StartTime)
@@ -40,13 +46,14 @@
                 @Html.DisplayFor(modelItem => item.Duration)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Description)
-            </td>
-            <td>
                 <a asp-action="Edit" asp-route-id="@item.GymClassId">Edit</a> |
                 <a asp-action="Details" asp-route-id="@item.GymClassId">Details</a> |
                 <a asp-action="Delete" asp-route-id="@item.GymClassId">Delete</a> |
-                <a asp-action="BookingToggle" asp-route-id="@item.GymClassId">Book</a>
+                    @if (User.IsInRole("Member"))
+                    {
+                        <a asp-action="BookingToggle" asp-route-id="@item.GymClassId" class="btn @(item.Attending ? "btn-danger" : "btn-success")">
+                            @(item.Attending ? "Cancel" : "Book")</a> 
+                    }
             </td>
         </tr>
 }

@@ -13,8 +13,8 @@ namespace Ovning14_SkalProj.Extensions
             var serviceProvider = scope.ServiceProvider;
             var db = serviceProvider.GetRequiredService<ApplicationDbContext>();
 
-            db.Database.EnsureDeleted();
-            db.Database.Migrate();
+            //db.Database.EnsureDeleted();
+            //db.Database.Migrate();
 
             //dotnet user-secrets set "AdminPW" "ChangeMe123!"
             var config = serviceProvider.GetRequiredService<IConfiguration>();

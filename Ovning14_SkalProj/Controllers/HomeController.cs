@@ -45,10 +45,6 @@ namespace Ovning14_SkalProj.Controllers
             
         }
 
-        public IActionResult Privacy()
-        {
-            return View();
-        }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

@@ -16,4 +16,8 @@
 		<ProjectReference Include="..\Ovning14_SkalProj.Core\Ovning14_SkalProj.Core.csproj" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <Folder Include="Data\Migrations\" />
+	</ItemGroup>
+
 </Project>

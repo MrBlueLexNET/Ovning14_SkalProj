@@ -9,11 +9,11 @@ using Ovning14_SkalProj.Data;
 
 #nullable disable
 
-namespace Ovning14SkalProj.Migrations
+namespace Ovning14SkalProj.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230126102708_NewDbSet")]
-    partial class NewDbSet
+    [Migration("20230130111459_reverse_changes")]
+    partial class reversechanges
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

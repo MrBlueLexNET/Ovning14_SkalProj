@@ -9,11 +9,11 @@ using Ovning14_SkalProj.Data;
 
 #nullable disable
 
-namespace Ovning14SkalProj.Migrations
+namespace Ovning14SkalProj.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230124113118_Initial")]
-    partial class Initial
+    [Migration("20230130112301_intitial")]
+    partial class intitial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -162,6 +162,40 @@ namespace Ovning14SkalProj.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("Ovning14_SkalProj.Core.Entities.Instructor", b =>
+                {
+                    b.Property<int>("InstructorId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("InstructorId"));
+
+                    b.Property<string>("Biography")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsPersonalTrainer")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<byte[]>("RowVersion")
+                        .IsConcurrencyToken()
+                        .IsRequired()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("rowversion");
+
+                    b.HasKey("InstructorId");
+
+                    b.ToTable("instructors");
+                });
+
             modelBuilder.Entity("Ovning14_SkalProj.Models.ApplicationUser", b =>
                 {
                     b.Property<string>("Id")
@@ -180,6 +214,14 @@ namespace Ovning14SkalProj.Migrations
 
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("bit");
+
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("bit");
@@ -239,7 +281,7 @@ namespace Ovning14SkalProj.Migrations
 
                     b.HasIndex("GymClassId");
 
-                    b.ToTable("ApplicationUserGymClass");
+                    b.ToTable("AppUsersGymClasses");
                 });
 
             modelBuilder.Entity("Ovning14_SkalProj.Models.GymClass", b =>
@@ -249,6 +291,10 @@ namespace Ovning14SkalProj.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("GymClassId"));
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<TimeSpan>("Duration")
                         .HasColumnType("time");

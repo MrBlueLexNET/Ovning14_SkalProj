@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Ovning14_SkalProj.Models;
+using System.ComponentModel.DataAnnotations;
 
 
 namespace Ovning14_SkalProj.Core.Entities

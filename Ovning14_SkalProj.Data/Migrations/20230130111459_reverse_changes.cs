@@ -3,10 +3,10 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace Ovning14SkalProj.Migrations
+namespace Ovning14SkalProj.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class Initial : Migration
+    public partial class reversechanges : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -58,11 +58,29 @@ namespace Ovning14SkalProj.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     StartTime = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Duration = table.Column<TimeSpan>(type: "time", nullable: false)
+                    Duration = table.Column<TimeSpan>(type: "time", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_GymClasses", x => x.GymClassId);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "instructors",
+                columns: table => new
+                {
+                    InstructorId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    IsPersonalTrainer = table.Column<bool>(type: "bit", nullable: false),
+                    Biography = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    RowVersion = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_instructors", x => x.InstructorId);
                 });
 
             migrationBuilder.CreateTable(
@@ -172,7 +190,7 @@ namespace Ovning14SkalProj.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "ApplicationUserGymClass",
+                name: "AppUsersGymClasses",
                 columns: table => new
                 {
                     ApplicationUserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
@@ -180,15 +198,15 @@ namespace Ovning14SkalProj.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ApplicationUserGymClass", x => new { x.ApplicationUserId, x.GymClassId });
+                    table.PrimaryKey("PK_AppUsersGymClasses", x => new { x.ApplicationUserId, x.GymClassId });
                     table.ForeignKey(
-                        name: "FK_ApplicationUserGymClass_AspNetUsers_ApplicationUserId",
+                        name: "FK_AppUsersGymClasses_AspNetUsers_ApplicationUserId",
                         column: x => x.ApplicationUserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_ApplicationUserGymClass_GymClasses_GymClassId",
+                        name: "FK_AppUsersGymClasses_GymClasses_GymClassId",
                         column: x => x.GymClassId,
                         principalTable: "GymClasses",
                         principalColumn: "GymClassId",
@@ -196,8 +214,8 @@ namespace Ovning14SkalProj.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_ApplicationUserGymClass_GymClassId",
-                table: "ApplicationUserGymClass",
+                name: "IX_AppUsersGymClasses_GymClassId",
+                table: "AppUsersGymClasses",
                 column: "GymClassId");
 
             migrationBuilder.CreateIndex(
@@ -244,7 +262,7 @@ namespace Ovning14SkalProj.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "ApplicationUserGymClass");
+                name: "AppUsersGymClasses");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoleClaims");
@@ -260,6 +278,9 @@ namespace Ovning14SkalProj.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUserTokens");
+
+            migrationBuilder.DropTable(
+                name: "instructors");
 
             migrationBuilder.DropTable(
                 name: "GymClasses");

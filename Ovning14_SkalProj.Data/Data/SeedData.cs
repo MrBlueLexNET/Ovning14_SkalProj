@@ -45,7 +45,7 @@ namespace Ovning14_SkalProj.Data.Data
 
             await AddToRolesAsync(admin, roleNames);
 
-            var intructors = GenerateInstructors(50);
+            var intructors = GenerateInstructors(10);
             await db.AddRangeAsync(intructors);
             await db.SaveChangesAsync();
 

@@ -12,6 +12,7 @@ using Ovning14_SkalProj.Data;
 using Ovning14_SkalProj.Core.Entities;
 using Ovning14_SkalProj.Models;
 using System.Security.Claims;
+using Ovning14_SkalProj.Extensions;
 
 namespace Ovning14_SkalProj.Controllers
 {
@@ -113,9 +114,20 @@ namespace Ovning14_SkalProj.Controllers
         }
 
         // GET: GymClasses/Create
+        //public IActionResult Create()
+        //{
+        //    return View();
+        //}
+
+        // GET: GymClasses/Create
         public IActionResult Create()
         {
-            return View();
+            return Request.IsAjax() ? PartialView("CreatePartial") : View();
+        }
+
+        public IActionResult FetchForm()
+        {
+            return PartialView("CreatePartial");
         }
 
         // POST: GymClasses/Create

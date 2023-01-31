@@ -4,11 +4,30 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1>Gym Classes</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
+
+<div id="createajax"></div>
+
+@if (User.IsInRole("Admin"))
+{
+    <div>
+        <a asp-action="Create">Create New Init.</a>
+
+        <a asp-action="Create" class="btn btn-dark"
+       data-ajax="true"
+       data-ajax-method="GET"
+       data-ajax-update="#createajax"
+       data-ajax-mode="replace"
+       data-ajax-success="fixValidation">Create New Jquery ajax unobtrusive</a>
+
+        <p id="fetch" class="btn btn-dark">Fetch</p>
+        <p id="fetch2" class="btn btn-dark">Fetch2</p>
+    </div>
+}
+
+
+
 <table class="table">
     <thead>
         <tr>
@@ -25,37 +44,12 @@
             <th></th>
         </tr>
     </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                    @if (User.IsInRole("Member"))
-                    {
 
-                        <a asp-action="Details" asp-route-id="@item.GymClassId">@item.Name</a>
-                    }
-                    else
-                    {
-                        @Html.DisplayFor(modelItem => item.Name)
-                    }
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.StartTime)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Duration)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.GymClassId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.GymClassId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.GymClassId">Delete</a> |
-                    @if (User.IsInRole("Member"))
-                    {
-                        <a asp-action="BookingToggle" asp-route-id="@item.GymClassId" class="btn @(item.Attending ? "btn-danger" : "btn-success")">
-                            @(item.Attending ? "Cancel" : "Book")</a> 
-                    }
-            </td>
-        </tr>
-}
+    <tbody id="gymclasses">
+        <partial name="GymClassesPartial" />
     </tbody>
+
+ 
+
+    
 </table>

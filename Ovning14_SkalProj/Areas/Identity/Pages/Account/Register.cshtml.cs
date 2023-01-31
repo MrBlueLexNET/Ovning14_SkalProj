@@ -124,9 +124,14 @@ namespace Ovning14_SkalProj.Areas.Identity.Pages.Account
 
                 await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
-                var result = await _userManager.CreateAsync(user, Input.Password);
+                user.FirstName = Input.FirstName;
+                user.LastName= Input.LastName;
 
-                if (result.Succeeded)
+                var result = await _userManager.CreateAsync(user, Input.Password);
+                //AddToRole Member AddToRoles Member,Admin
+                var addToRoleResult = await _userManager.AddToRoleAsync(user, "Member");
+
+                if (result.Succeeded && addToRoleResult.Succeeded)
                 {
                     _logger.LogInformation("User created a new account with password.");
 
@@ -148,7 +153,8 @@ namespace Ovning14_SkalProj.Areas.Identity.Pages.Account
                     }
                     else
                     {
-                        await _signInManager.SignInAsync(user, isPersistent: false);
+                        //Fix do not want to Login direct
+                        //await _signInManager.SignInAsync(user, isPersistent: false);
                         return LocalRedirect(returnUrl);
                     }
                 }

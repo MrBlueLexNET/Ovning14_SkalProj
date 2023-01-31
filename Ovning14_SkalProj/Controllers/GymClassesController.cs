@@ -181,7 +181,8 @@ namespace Ovning14_SkalProj.Controllers
                 try
                 {
                     _context.Update(gymClass);
-                    await _context.SaveChangesAsync();
+                    await _context.SaveChangesAsync(); 
+                    return Request.IsAjax() ? PartialView("GymClassPartial", gymClass) : RedirectToAction(nameof(Index));
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -194,7 +195,13 @@ namespace Ovning14_SkalProj.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+               
+                //return RedirectToAction(nameof(Index));
+            }
+            if (Request.IsAjax())
+            {
+                Response.StatusCode = StatusCodes.Status400BadRequest;
+                return PartialView("CreatePartial", gymClass);
             }
             return View(gymClass);
         }

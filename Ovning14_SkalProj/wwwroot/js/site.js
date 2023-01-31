@@ -42,7 +42,7 @@ function fetchCreateForm() {
 }
 
 async function fetchCreateForm2() {
-    const res = await fetch('https://localhost:44301/GymClasses/FetchForm', { method: 'GET' });
+    const res = await fetch('https://localhost:7241/GymClasses/FetchForm', { method: 'GET' });
     //Check res! res.ok
     const data = await res.text();
     createForm.innerHTML = data;

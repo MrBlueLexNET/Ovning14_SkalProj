@@ -16,6 +16,7 @@ using Ovning14_SkalProj.Extensions;
 
 namespace Ovning14_SkalProj.Controllers
 {
+    [Authorize]
     public class GymClassesController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -28,7 +29,7 @@ namespace Ovning14_SkalProj.Controllers
             this.userManager = userManager;
             this.roleManager = roleManager;
         }
-        [Authorize]
+        [AllowAnonymous]
 
         //BookingToggle
         public async Task<IActionResult> BookingToggle(int? id) 

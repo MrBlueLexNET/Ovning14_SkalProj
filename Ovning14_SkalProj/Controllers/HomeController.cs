@@ -9,7 +9,7 @@ using System.Diagnostics;
 
 namespace Ovning14_SkalProj.Controllers
 {
-    [Authorize]
+    //[Authorize]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
